@@ -19,7 +19,7 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
     }
   })
 
-  it.only('Preencher os campos obrigatórios e encaminhar o formulário', () => {
+  it('Preencher os campos obrigatórios e encaminhar o formulário', () => {
     cy.get('#firstName').should('be.visible').type('Felipe')
     cy.get('#firstName').should('have.value', 'Felipe')
 
@@ -46,4 +46,30 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
 
     cy.get('.success').should('be.visible')
   })
+
+  it('Exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', () => {
+    cy.get('#firstName').type('Felipe')
+    cy.get('#lastName').type('Gonçalves')
+    cy.get('#email').type('felipe-gmail.com')
+    cy.get('#open-text-area').type('Teste de mensagem com e-mail inválido')
+    cy.get('button[type="submit"]').click()
+
+    cy.get('.error').should('be.visible')
+  })
+
+  it('Verificando se o campo de telefone aceita apenas números', () => {
+    cy.get('#phone').type('abc')
+    //cy.get('#phone').should('have.value', '')
+  })
+
+  it.only('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', () => {
+    cy.get('#firstName').type('Felipe')
+    cy.get('#lastName').type('Gonçalves')
+    cy.get('#email').type('test@teste.com.br')
+    cy.get('#phone-checkbox').click()
+    cy.get('#open-text-area').type('Teste de mensagem de erro, quando marca o telefone como contato, porém não preenche o campo')
+    cy.get('button[type="submit"]').click()
+
+    cy.get('.error').should('be.visible')
+    })
 })
