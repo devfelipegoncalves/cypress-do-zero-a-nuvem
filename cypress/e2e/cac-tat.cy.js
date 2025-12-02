@@ -8,7 +8,6 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
   })
 
   it('Verificar título da aplicação', () => {
-    cy.visit('/../../src/index.html')
 
     let titulo = cy.title().should('eq','Central de Atendimento ao Cliente TAT')
 
@@ -20,7 +19,9 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
   })
 
   it('Preencher os campos obrigatórios e encaminhar o formulário', () => {
-    cy.get('#firstName').should('be.visible').type('Felipe')
+    cy.get('#firstName')
+      .should('be.visible')
+      .type('Felipe')
     cy.get('#firstName').should('have.value', 'Felipe')
 
     cy.get('#lastName').should('be.visible')
@@ -62,7 +63,7 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
     //cy.get('#phone').should('have.value', '')
   })
 
-  it.only('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', () => {
+  it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', () => {
     cy.get('#firstName').type('Felipe')
     cy.get('#lastName').type('Gonçalves')
     cy.get('#email').type('test@teste.com.br')
@@ -72,4 +73,30 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
 
     cy.get('.error').should('be.visible')
     })
+
+    it.only('Preenche e limpa os campos nome, sobrenome, email e telefone', () => {
+        cy.get('#firstName')
+          .type('Felipe')
+          .should('have.value', 'Felipe')
+          .clear()
+          .should('have.value', '')
+
+        cy.get('#lastName')
+          .type('Gonçalves')
+          .should('have.value', 'Gonçalves')
+          .clear()
+          .should('have.value', '')
+
+          cy.get('#email')
+            .type('felipe@teste.com.br')
+            .should('have.value', 'felipe@teste.com.br')
+            .clear()
+            .should('have.value', '')
+        
+          cy.get('#phone')
+            .type('40028922')
+            .should('have.value', '40028922')
+            .clear()
+            .should('have.value', '')
+    }) 
 })
