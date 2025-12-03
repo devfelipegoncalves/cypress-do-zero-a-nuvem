@@ -74,7 +74,7 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
     cy.get('.error').should('be.visible')
     })
 
-    it.only('Preenche e limpa os campos nome, sobrenome, email e telefone', () => {
+    it('Preenche e limpa os campos nome, sobrenome, email e telefone', () => {
         cy.get('#firstName')
           .type('Felipe')
           .should('have.value', 'Felipe')
@@ -99,4 +99,14 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
             .clear()
             .should('have.value', '')
     }) 
+
+    it('Exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', () => {
+        cy.get('button[type="submit"]').click()
+
+        cy.get('.error').should('be.visible')
+    })
+
+    it.only('', () => {
+      
+    })
 })
