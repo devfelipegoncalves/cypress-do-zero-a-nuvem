@@ -18,7 +18,7 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
     }
   })
 
-  it('Preencher os campos obrigatórios e encaminhar o formulário', () => {
+  it.only('Preencher os campos obrigatórios e encaminhar o formulário', () => {
     cy.get('#firstName')
       .should('be.visible')
       .type('Felipe')
@@ -106,7 +106,9 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
         cy.get('.error').should('be.visible')
     })
 
-    it.only('', () => {
-      
+    it('Envia o formuário com sucesso usando um comando customizado', () => {
+      cy.fillMandatoryFieldsAndSubmit()
+
+      cy.get('.success').should('be.visible')
     })
 })
