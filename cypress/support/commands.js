@@ -33,16 +33,20 @@ Cypress.Commands.add('fillMandatoryFieldsAndSubmit', data => {
     cy.get('button[type="submit"').click()
 })
     */
-Cypress.Commands.add('fillMandatoryFieldsAndSubmit', (data = {
-    firstName: 'John',
-    lastName: 'Due',
-    email: 'joe@teste.com.br',
-    text: 'textjoe'
-
-}) => {
-    cy.get('#firstName').type(data.firstName)
-    cy.get('#lastName').type(data.lastName)
-    cy.get('#email').type(data.email)
-    cy.get('#open-text-area').type(data.text)
+Cypress.Commands.add(
+  "fillMandatoryFieldsAndSubmit",
+  (
+    data = {
+      firstName: "John",
+      lastName: "Due",
+      email: "joe@teste.com.br",
+      text: "textjoe",
+    }
+  ) => {
+    cy.get("#firstName").type(data.firstName)
+    cy.get("#lastName").type(data.lastName)
+    cy.get("#email").type(data.email)
+    cy.get("#open-text-area").type(data.text)
     cy.get('button[type="submit"').click()
-})
+  }
+)
