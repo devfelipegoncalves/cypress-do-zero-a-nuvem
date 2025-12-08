@@ -18,7 +18,7 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
     }
   })
 
-  it.only('Preencher os campos obrigatórios e encaminhar o formulário', () => {
+  it('Preencher os campos obrigatórios e encaminhar o formulário', () => {
     cy.get('#firstName')
       .should('be.visible')
       .type('Felipe')
@@ -40,7 +40,7 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
     cy.get('@desc').type(textLong, { delay: 0})
     cy.get('@desc').should('have.value', textLong)
 
-    cy.get('button[type="submit"]')
+    cy.contains('Enviar')
     .as('btnEnviar')
     cy.get('@btnEnviar').should('be.visible')
     cy.get('@btnEnviar').click()
@@ -53,7 +53,7 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
     cy.get('#lastName').type('Gonçalves')
     cy.get('#email').type('felipe-gmail.com')
     cy.get('#open-text-area').type('Teste de mensagem com e-mail inválido')
-    cy.get('button[type="submit"]').click()
+    cy.contains('Enviar').click()
 
     cy.get('.error').should('be.visible')
   })
@@ -69,7 +69,7 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
     cy.get('#email').type('test@teste.com.br')
     cy.get('#phone-checkbox').click()
     cy.get('#open-text-area').type('Teste de mensagem de erro, quando marca o telefone como contato, porém não preenche o campo')
-    cy.get('button[type="submit"]').click()
+    cy.contains('Enviar').click()
 
     cy.get('.error').should('be.visible')
     })
@@ -101,14 +101,65 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
     }) 
 
     it('Exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', () => {
-        cy.get('button[type="submit"]').click()
+        cy.contains('Enviar').click()
 
         cy.get('.error').should('be.visible')
     })
 
-    it('Envia o formuário com sucesso usando um comando customizado', () => {
+    it('Envia o formuário com sucesso usando um comando customizado', () => { 
+      // sem data dados
       cy.fillMandatoryFieldsAndSubmit()
 
       cy.get('.success').should('be.visible')
+    })
+
+    it('Envia o formuário com sucesso usando um comando customizado', () => { 
+      // com data
+      const data = {
+        firstName: 'Felipe',
+        lastName: 'Gonçalves',
+        email:'dev.felipegon@gmail.com',
+        text: 'Teste com data'
+      }
+
+      cy.fillMandatoryFieldsAndSubmit(data)
+
+      cy.get('.success').should('be.visible')
+    })
+
+    it('Envia o formuário com sucesso usando um comando customizado', () => {
+
+      cy.fillMandatoryFieldsAndSubmit()
+
+      cy.get('.success').should('be.visible')
+    })
+
+    it('Verificação utilizando o contains', () => {
+      cy.get('#firstName')
+        .should('be.visible')
+        .type('Felipe')
+      cy.get('#firstName').should('have.value', 'Felipe')
+
+      cy.get('#lastName').should('be.visible')
+      cy.get('#lastName').type('Augusto')
+      cy.get('#lastName').should('have.value', 'Augusto')
+
+      cy.get('#email').should('be.visible')
+      cy.get('#email').type('teste@gmail.com')
+      cy.get('#email').should('have.value', 'teste@gmail.com')
+
+      const textLong = Cypress._.repeat('Obrigado ', 20)
+
+      cy.get('#open-text-area')
+        .as('desc')
+      cy.get('@desc').should('be.visible')
+      cy.get('@desc').type(textLong, { delay: 0})
+      cy.get('@desc').should('have.value', textLong)
+
+      cy.contains('Enviar')
+        .click()
+
+      cy.get('.success').should('be.visible')
+
     })
 })

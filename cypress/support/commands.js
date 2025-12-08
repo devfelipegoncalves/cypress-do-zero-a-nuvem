@@ -24,10 +24,25 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-Cypress.Commands.add('fillMandatoryFieldsAndSubmit', ()=>{
-    cy.get('#firstName').type('Felipe')
-    cy.get('#lastName').type('Augusto')
-    cy.get('#email').type('felipe@teste.com.br')
-    cy.get('#open-text-area').type('Teste de mensagem')
+/*
+Cypress.Commands.add('fillMandatoryFieldsAndSubmit', data => {
+    cy.get('#firstName').type(data.firstName)
+    cy.get('#lastName').type(data.lastName)
+    cy.get('#email').type(data.email)
+    cy.get('#open-text-area').type(data.text)
+    cy.get('button[type="submit"').click()
+})
+    */
+Cypress.Commands.add('fillMandatoryFieldsAndSubmit', (data = {
+    firstName: 'John',
+    lastName: 'Due',
+    email: 'joe@teste.com.br',
+    text: 'textjoe'
+
+}) => {
+    cy.get('#firstName').type(data.firstName)
+    cy.get('#lastName').type(data.lastName)
+    cy.get('#email').type(data.email)
+    cy.get('#open-text-area').type(data.text)
     cy.get('button[type="submit"').click()
 })
