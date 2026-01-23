@@ -162,11 +162,21 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
       cy.get('.success').should('be.visible')
 
     })
-
+  /*
     it.only('teste de seleção de opções aleatórias no menu de dropdown', () => {
       cy.get('#product')
         .its('length', {log: false}).then(n => {
             cy.get('option').select(Cypress._.random(n-1))
         })
+
     })
+  */
+
+    it.only('Seleciona um produto (YouTube) por seu texto', () => {
+      cy.get('#product').select('YouTube')
+
+      cy.should('have.value', 'youtube')
+    })
+
+    
 })
