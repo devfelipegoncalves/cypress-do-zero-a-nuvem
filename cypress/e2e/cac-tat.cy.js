@@ -172,11 +172,23 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
     })
   */
 
-    it.only('Seleciona um produto (YouTube) por seu texto', () => {
+    it('Seleciona um produto (YouTube) por seu texto', () => {
       cy.get('#product').select('YouTube')
 
       cy.should('have.value', 'youtube')
     })
 
-    
+    it('Selecionaa um produto (Mentoria) por seu valor (value)', () =>{
+      cy.get('#product').select('mentoria')
+
+      cy.should('have.value', 'mentoria')
+    })
+
+    it.only('Seleciona um produto (Blog) por seu índice', () =>{
+      cy.get('#product').select(1)
+
+      cy.should('have.value', 'blog')
+    })
+
+
 })
