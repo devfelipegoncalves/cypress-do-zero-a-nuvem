@@ -184,11 +184,15 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
       cy.should('have.value', 'mentoria')
     })
 
-    it.only('Seleciona um produto (Blog) por seu índice', () =>{
+    it('Seleciona um produto (Blog) por seu índice', () =>{
       cy.get('#product').select(1)
 
       cy.should('have.value', 'blog')
     })
 
+    it.only('marca o tipo de atendimento "Feedback"', () =>{
+      cy.get('input[type="radio"]').check('feedback')
+      .should('have.value', 'feedback')
+    })
 
 })
