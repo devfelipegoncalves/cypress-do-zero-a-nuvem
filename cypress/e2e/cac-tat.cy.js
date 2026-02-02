@@ -67,7 +67,7 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
     cy.get('#firstName').type('Felipe')
     cy.get('#lastName').type('Gonçalves')
     cy.get('#email').type('test@teste.com.br')
-    cy.get('#phone-checkbox').click()
+    cy.get('#phone-checkbox').check()
     cy.get('#open-text-area').type('Teste de mensagem de erro, quando marca o telefone como contato, porém não preenche o campo')
     cy.contains('Enviar').click()
 
@@ -200,13 +200,27 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
       .should('be.checked')
     })
 
-    it.only('Marca cada tipo de atendimento', () =>{
+    it('Marca cada tipo de atendimento', () =>{
     cy.get('input[type="radio"]')
       .each(typeOfService => {
         cy.wrap(typeOfService)
           .check()
           .should('be.checked')
       })
+    })
+
+    it('Marca ambos checkboxes, depois desmarca o último', () => {
+      cy.get('input[type="checkbox"]')
+        .as('checkboxes')
+
+      cy.get('@checkboxes')
+        .check()
+
+      cy.get('@checkboxes')
+        .last()
+        .uncheck()
+        .should('not.be.checked')
+      
     })
 
 })
