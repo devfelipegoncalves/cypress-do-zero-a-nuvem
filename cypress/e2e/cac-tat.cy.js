@@ -190,9 +190,23 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
       cy.should('have.value', 'blog')
     })
 
-    it.only('marca o tipo de atendimento "Feedback"', () =>{
+    it('marca o tipo de atendimento "Feedback"', () =>{
       cy.get('input[type="radio"]').check('feedback')
       .should('have.value', 'feedback')
+    })
+
+    it('Marca o tipo de atendimento "Feedback versão 2"', () =>{
+      cy.get('input[type="radio"][value="feedback"]').check()
+      .should('be.checked')
+    })
+
+    it.only('Marca cada tipo de atendimento', () =>{
+    cy.get('input[type="radio"]')
+      .each(typeOfService => {
+        cy.wrap(typeOfService)
+          .check()
+          .should('be.checked')
+      })
     })
 
 })
