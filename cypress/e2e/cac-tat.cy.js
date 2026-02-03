@@ -223,4 +223,26 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
       
     })
 
+    it('Seleciona um arquivo da pasta fixtures', () => {
+      cy.get('input[type="file"]')
+        .selectFile('./cypress/fixtures/example.json')
+        .then(input => {
+          expect(input[0].files[0].name).to.equal('example.json')
+        })
+    })
+
+    it('seleciona um arquivo simulando um drag-and-drop', () => {
+      cy.get('input[type="file"]')
+        .selectFile('./cypress/fixtures/example.json', { action: 'drag-drop'})
+    })
+
+    it('Seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', () => {
+      cy.fixture('example.json', {encoding: null}).as('exampleFile')
+      cy.get('input[type="file"]')
+        .selectFile('@exampleFile')
+        .then(input => {
+          expect(input[0].files[0].name).to.equal('example.json')
+        })
+    })
+
 })
