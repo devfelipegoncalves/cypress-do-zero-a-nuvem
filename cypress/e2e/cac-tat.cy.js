@@ -237,12 +237,30 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
     })
 
     it('Seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', () => {
-      cy.fixture('example.json', {encoding: null}).as('exampleFile')
+      cy.fixture('example.json', {encoding: null})
+        .as('exampleFile')
+        
       cy.get('input[type="file"]')
         .selectFile('@exampleFile')
         .then(input => {
           expect(input[0].files[0].name).to.equal('example.json')
         })
+    })
+
+    it('Verifica que a política de privacidade abre em outra aba sem a necessidade de um clique', () =>{
+      //cy.get('#privacy a')
+      cy.contains('a', 'Política de Privacidade')
+        .should('have.attr', 'href', 'privacy.html')
+        .and('have.attr', 'target', '_blank')
+      
+    })
+
+    it.only('Acessa a página da política de privacidade removendo o target e então clicando no link', () =>{
+      cy.contains('a', 'Política de Privacidade')
+        .invoke('removeAttr', 'target')
+        .click()
+
+      cy.contains('h1', 'CAC TAT - Política de Privacidade').should('be.visible')
     })
 
 })

@@ -24,6 +24,7 @@
   "license": "MIT",
   "homepage": "https://github.com/wlsf82/cypress-do-zero-a-nuvem#readme",
   "devDependencies": {
+    "@cypress/puppeteer": "^0.1.8",
     "cypress": "^13.17.0"
   },
   "dependencies": {
