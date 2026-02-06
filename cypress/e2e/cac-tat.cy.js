@@ -1,5 +1,6 @@
 describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
   beforeEach(() => {
+    cy.clock()
     cy.visit('/../../src/index.html')
   })
 
@@ -46,6 +47,7 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
     cy.get('@btnEnviar').click()
 
     cy.get('.success').should('be.visible')
+    cy.tick(4000)
   })
 
   it('Exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', () => {
@@ -56,6 +58,7 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
     cy.contains('Enviar').click()
 
     cy.get('.error').should('be.visible')
+    cy.tick(4000)
   })
 
   it('Verificando se o campo de telefone aceita apenas números', () => {
@@ -72,6 +75,7 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
     cy.contains('Enviar').click()
 
     cy.get('.error').should('be.visible')
+    cy.tick(4000)
     })
 
     it('Preenche e limpa os campos nome, sobrenome, email e telefone', () => {
@@ -104,6 +108,7 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
         cy.contains('Enviar').click()
 
         cy.get('.error').should('be.visible')
+        cy.tick(4000)
     })
 
     it('Envia o formuário com sucesso usando um comando customizado', () => { 
@@ -111,6 +116,7 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
       cy.fillMandatoryFieldsAndSubmit()
 
       cy.get('.success').should('be.visible')
+      cy.clock(4000)
     })
 
     it('Envia o formuário com sucesso usando um comando customizado', () => { 
@@ -125,6 +131,7 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
       cy.fillMandatoryFieldsAndSubmit(data)
 
       cy.get('.success').should('be.visible')
+      cy.clock(4000)
     })
 
     it('Envia o formuário com sucesso usando um comando customizado', () => {
@@ -132,6 +139,7 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
       cy.fillMandatoryFieldsAndSubmit()
 
       cy.get('.success').should('be.visible')
+      cy.clock(4000)
     })
 
     it('Verificação utilizando o contains', () => {
@@ -160,6 +168,7 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
         .click()
 
       cy.get('.success').should('be.visible')
+      cy.clock(4000)
 
     })
   /*
