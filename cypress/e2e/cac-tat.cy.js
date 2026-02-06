@@ -1,6 +1,5 @@
 describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
   beforeEach(() => {
-    cy.clock()
     cy.visit('/../../src/index.html')
   })
 
@@ -20,6 +19,8 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
   })
 
   it('Preencher os campos obrigatórios e encaminhar o formulário', () => {
+    cy.clock()
+
     cy.get('#firstName')
       .should('be.visible')
       .type('Felipe')
@@ -47,10 +48,13 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
     cy.get('@btnEnviar').click()
 
     cy.get('.success').should('be.visible')
-    cy.tick(4000)
+    cy.tick(3000)
+    cy.get('.success').should('not.be.visible')
   })
 
   it('Exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', () => {
+    cy.clock()
+
     cy.get('#firstName').type('Felipe')
     cy.get('#lastName').type('Gonçalves')
     cy.get('#email').type('felipe-gmail.com')
@@ -58,7 +62,8 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
     cy.contains('Enviar').click()
 
     cy.get('.error').should('be.visible')
-    cy.tick(4000)
+    cy.tick(3000)
+    cy.get('.error').should('not.be.visible')
   })
 
   it('Verificando se o campo de telefone aceita apenas números', () => {
@@ -67,6 +72,8 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
   })
 
   it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', () => {
+    cy.clock()
+
     cy.get('#firstName').type('Felipe')
     cy.get('#lastName').type('Gonçalves')
     cy.get('#email').type('test@teste.com.br')
@@ -75,7 +82,8 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
     cy.contains('Enviar').click()
 
     cy.get('.error').should('be.visible')
-    cy.tick(4000)
+    cy.tick(3000)
+    cy.get('.error').should('not.be.visible')
     })
 
     it('Preenche e limpa os campos nome, sobrenome, email e telefone', () => {
@@ -105,21 +113,29 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
     }) 
 
     it('Exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', () => {
+        cy.clock()
+
         cy.contains('Enviar').click()
 
         cy.get('.error').should('be.visible')
-        cy.tick(4000)
+        cy.tick(3000)
+        cy.get('.error').should('not.be.visible')
     })
 
     it('Envia o formuário com sucesso usando um comando customizado', () => { 
+
+      cy.clock()
       // sem data dados
       cy.fillMandatoryFieldsAndSubmit()
 
       cy.get('.success').should('be.visible')
-      cy.clock(4000)
+      cy.tick(3000)
+      cy.get('.success').should('not.be.visible')
     })
 
     it('Envia o formuário com sucesso usando um comando customizado', () => { 
+
+      cy.clock()
       // com data
       const data = {
         firstName: 'Felipe',
@@ -131,18 +147,24 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
       cy.fillMandatoryFieldsAndSubmit(data)
 
       cy.get('.success').should('be.visible')
-      cy.clock(4000)
+      cy.tick(3000)
+      cy.get('.success').should('not.be.visible')
     })
 
     it('Envia o formuário com sucesso usando um comando customizado', () => {
 
+      cy.clock()
+
       cy.fillMandatoryFieldsAndSubmit()
 
       cy.get('.success').should('be.visible')
-      cy.clock(4000)
+      cy.tick(3000)
+      cy.get('.success').should('not.be.visible')
     })
 
     it('Verificação utilizando o contains', () => {
+      cy.clock()
+
       cy.get('#firstName')
         .should('be.visible')
         .type('Felipe')
@@ -168,7 +190,8 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
         .click()
 
       cy.get('.success').should('be.visible')
-      cy.clock(4000)
+      cy.tick(3000)
+      cy.get('.success').should('not.be.visible')
 
     })
   /*
