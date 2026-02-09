@@ -18,38 +18,41 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
     }
   })
 
-  it('Preencher os campos obrigatórios e encaminhar o formulário', () => {
-    cy.clock()
-
-    cy.get('#firstName')
-      .should('be.visible')
-      .type('Felipe')
-    cy.get('#firstName').should('have.value', 'Felipe')
-
-    cy.get('#lastName').should('be.visible')
-    cy.get('#lastName').type('Augusto')
-    cy.get('#lastName').should('have.value', 'Augusto')
-
-    cy.get('#email').should('be.visible')
-    cy.get('#email').type('teste@gmail.com')
-    cy.get('#email').should('have.value', 'teste@gmail.com')
-
-    const textLong = Cypress._.repeat('Obrigado ', 20)
-
-    cy.get('#open-text-area')
-    .as('desc')
-    cy.get('@desc').should('be.visible')
-    cy.get('@desc').type(textLong, { delay: 0})
-    cy.get('@desc').should('have.value', textLong)
-
-    cy.contains('Enviar')
-    .as('btnEnviar')
-    cy.get('@btnEnviar').should('be.visible')
-    cy.get('@btnEnviar').click()
-
-    cy.get('.success').should('be.visible')
-    cy.tick(3000)
-    cy.get('.success').should('not.be.visible')
+  Cypress._.times(5, () => {
+    it('Preencher os campos obrigatórios e encaminhar o formulário', () => {
+      cy.clock()
+  
+      cy.get('#firstName')
+        .should('be.visible')
+        .type('Felipe')
+      cy.get('#firstName').should('have.value', 'Felipe')
+  
+      cy.get('#lastName').should('be.visible')
+      cy.get('#lastName').type('Augusto')
+      cy.get('#lastName').should('have.value', 'Augusto')
+  
+      cy.get('#email').should('be.visible')
+      cy.get('#email').type('teste@gmail.com')
+      cy.get('#email').should('have.value', 'teste@gmail.com')
+  
+      const textLong = Cypress._.repeat('Obrigado ', 20)
+  
+      cy.get('#open-text-area')
+      .as('desc')
+      cy.get('@desc').should('be.visible')
+      cy.get('@desc').type(textLong, { delay: 0})
+      cy.get('@desc').should('have.value', textLong)
+  
+      cy.contains('Enviar')
+      .as('btnEnviar')
+      cy.get('@btnEnviar').should('be.visible')
+      cy.get('@btnEnviar').click()
+  
+      cy.get('.success').should('be.visible')
+      cy.tick(3000)
+      cy.get('.success').should('not.be.visible')
+    })
+  
   })
 
   it('Exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', () => {
