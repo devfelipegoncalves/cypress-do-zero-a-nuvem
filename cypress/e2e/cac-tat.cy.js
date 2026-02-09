@@ -340,4 +340,17 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
         .should('not.be.visible')
     })
 
+    it.only('Gato talkabout', ()=>{
+      cy.get('#cat')
+        .should('not.be.visible')
+        .invoke('show')
+        .should('be.visible')
+
+      cy.get('#title')
+        .invoke('text', 'CAT - TAT')
+      
+      cy.get('#subtitle')
+        .invoke('text', 'Eu ❤️ gatos')
+    })
+
 })
