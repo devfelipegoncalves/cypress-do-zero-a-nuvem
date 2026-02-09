@@ -303,12 +303,14 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
         .should('not.be.visible')
         .invoke('show')
         .should('be.visible')
+        .and('contain', 'Mensagem enviada com sucesso.')
         .invoke('hide')
 
       cy.get('.error')
         .should('not.be.visible')
         .invoke('show')
         .should('be.visible')
+        .and('contain', 'Valide os campos obrigatórios!')
         .invoke('hide')
     })
 
