@@ -17,43 +17,39 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
       cy.log('Título da aplicação está incorreto')
     }
   })
-
-  Cypress._.times(5, () => {
-    it('Preencher os campos obrigatórios e encaminhar o formulário', () => {
-      cy.clock()
+  it('Preencher os campos obrigatórios e encaminhar o formulário', () => {
+    cy.clock()
   
-      cy.get('#firstName')
-        .should('be.visible')
-        .type('Felipe')
-      cy.get('#firstName').should('have.value', 'Felipe')
+    cy.get('#firstName')
+      .should('be.visible')
+      .type('Felipe')
+    cy.get('#firstName').should('have.value', 'Felipe')
   
-      cy.get('#lastName').should('be.visible')
-      cy.get('#lastName').type('Augusto')
-      cy.get('#lastName').should('have.value', 'Augusto')
+    cy.get('#lastName').should('be.visible')
+    cy.get('#lastName').type('Augusto')
+    cy.get('#lastName').should('have.value', 'Augusto')
   
-      cy.get('#email').should('be.visible')
-      cy.get('#email').type('teste@gmail.com')
-      cy.get('#email').should('have.value', 'teste@gmail.com')
+    cy.get('#email').should('be.visible')
+    cy.get('#email').type('teste@gmail.com')
+    cy.get('#email').should('have.value', 'teste@gmail.com')
   
-      const textLong = Cypress._.repeat('Obrigado ', 20)
+    const textLong = Cypress._.repeat('Obrigado ', 20)
   
-      cy.get('#open-text-area')
+    cy.get('#open-text-area')
       .as('desc')
-      cy.get('@desc').should('be.visible')
-      cy.get('@desc').type(textLong, { delay: 0})
-      cy.get('@desc').should('have.value', textLong)
+    cy.get('@desc').should('be.visible')
+    cy.get('@desc').type(textLong, { delay: 0})
+    cy.get('@desc').should('have.value', textLong)
   
-      cy.contains('Enviar')
+    cy.contains('Enviar')
       .as('btnEnviar')
-      cy.get('@btnEnviar').should('be.visible')
-      cy.get('@btnEnviar').click()
+    cy.get('@btnEnviar').should('be.visible')
+    cy.get('@btnEnviar').click()
   
-      cy.get('.success').should('be.visible')
-      cy.tick(3000)
-      cy.get('.success').should('not.be.visible')
+    cy.get('.success').should('be.visible')
+    cy.tick(3000)
+    cy.get('.success').should('not.be.visible')
     })
-  
-  })
 
   it('Exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', () => {
     cy.clock()
@@ -312,6 +308,36 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
         .should('be.visible')
         .and('contain', 'Valide os campos obrigatórios!')
         .invoke('hide')
+    })
+
+    it('preenche o campo da área de texto usando o comando invoke', () =>{
+      cy.get('#open-text-area')
+        .invoke('val', 'um texto qualquer')
+        .should('have.value', 'um texto qualquer')
+    })
+
+    it('faz uma requisição HTTP', () => {
+      cy.request('https://cac-tat-v3.s3.eu-central-1.amazonaws.com/index.html')
+        .as('getRequest')
+        .its('status')
+        .should('be.equal', 200)
+
+      cy.get('@getRequest')
+        .its('statusText')
+        .should('be.equal', 'OK')
+
+      cy.get('@getRequest')
+        .its('body')
+        .should('include', 'CAC TAT')
+    })
+
+    it('Desafio do gato', () => {
+      cy.get('#cat')
+        .should('not.be.visible')
+        .invoke('show')
+        .should('be.visible')
+        .invoke('hide')
+        .should('not.be.visible')
     })
 
 })
