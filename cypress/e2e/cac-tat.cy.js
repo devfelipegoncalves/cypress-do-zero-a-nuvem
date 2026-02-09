@@ -298,4 +298,18 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
       cy.contains('h1', 'CAC TAT - Política de Privacidade').should('be.visible')
     })
 
+    it('exibe e oculta as mensagens de sucesso e erro usando .invoke()', ()=> {
+      cy.get('.success')
+        .should('not.be.visible')
+        .invoke('show')
+        .should('be.visible')
+        .invoke('hide')
+
+      cy.get('.error')
+        .should('not.be.visible')
+        .invoke('show')
+        .should('be.visible')
+        .invoke('hide')
+    })
+
 })
