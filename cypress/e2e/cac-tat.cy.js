@@ -340,7 +340,7 @@ describe('Central de Atendimento CAC TAT - Preenchendo formulário', () => {
         .should('not.be.visible')
     })
 
-    it.only('Gato talkabout', ()=>{
+    it('Gato talkabout', ()=>{
       cy.get('#cat')
         .should('not.be.visible')
         .invoke('show')
